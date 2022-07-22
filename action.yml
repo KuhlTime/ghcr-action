@@ -1,0 +1,33 @@
+name: GHCR-Action
+description: This is a opinionated workflow to build and upload your docker image to the GitHub Container Registry.
+
+inputs:
+  token:
+    description: The GitHub token to interact with the registry. Normally 'secrets.GITHUB_TOKEN'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Repository Variable to Lowercase
+      id: string
+      uses: ASzc/change-string-case-action@v1
+      with:
+        string: ${{ github.repository }}
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ inputs.token }}
+
+    - name: Build and push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ghcr.io/${{ steps.string.outputs.lowercase }}:latest, ghcr.io/${{ steps.string.outputs.lowercase }}:${{ github.head_ref || github.ref_name }}
