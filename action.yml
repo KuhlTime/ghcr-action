@@ -1,5 +1,9 @@
 name: GHCR-Action
 description: This is a opinionated workflow to build and upload your docker image to the GitHub Container Registry.
+author: André Kuhlmann
+branding:
+  icon: anchor
+  color: gray-dark
 
 inputs:
   token:
