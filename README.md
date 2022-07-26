@@ -9,9 +9,12 @@ An opinionated workflow to build and upload your docker image to the GitHub Cont
 ```yaml
 name: Build Docker Image
 
-on: 
-  - push
-  - tags: 'v*'
+on:
+  push:
+    branches:
+      - '*'
+    tags:
+      - 'v*'
 
 # Required for secrets.GITHUB_TOKEN
 permissions:
@@ -26,5 +29,4 @@ jobs:
         uses: KuhlTime/ghcr-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
 ```
