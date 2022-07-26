@@ -9,7 +9,9 @@ An opinionated workflow to build and upload your docker image to the GitHub Cont
 ```yaml
 name: Build Docker Image
 
-on: push
+on: 
+  - push
+  - tags: 'v*'
 
 # Required for secrets.GITHUB_TOKEN
 permissions:
@@ -21,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GHCR-Action
-        uses: KuhlTime/ghcr-action@v0.1.0
+        uses: KuhlTime/ghcr-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
