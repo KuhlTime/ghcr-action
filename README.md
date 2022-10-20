@@ -30,3 +30,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+Optionally you can add further build-time arguments that get passed to docker on build:
+
+```yaml
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          build-args:
+            MY_ENV_VARIABLE: "Hello GitHub!"
+```

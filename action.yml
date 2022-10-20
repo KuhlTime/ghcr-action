@@ -9,6 +9,9 @@ inputs:
   token:
     description: The GitHub token to interact with the registry. Normally 'secrets.GITHUB_TOKEN'
     required: true
+  build-args:
+    description: (Optional) List of build-time variables
+    required: false
 
 runs:
   using: composite
@@ -54,3 +57,4 @@ runs:
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+        build-args: ${{ inputs.build-args }}
