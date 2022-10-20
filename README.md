@@ -36,6 +36,6 @@ Optionally you can add further build-time arguments that get passed to docker on
 ```yaml
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          build-args:
+          build-args: |
             MY_ENV_VARIABLE: "Hello GitHub!"
 ```
