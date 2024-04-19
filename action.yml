@@ -12,9 +12,12 @@ inputs:
   build-args:
     description: (Optional) List of build-time variables
     required: false
-  dockerfile:  # New input for dockerfile path
+  dockerfile: # New input for dockerfile path
     description: Path to the Dockerfile (defaults to Dockerfile)
-    default: Dockerfile  # Set default value if not provided
+    default: Dockerfile # Set default value if not provided
+  image-name-overwrite:
+    description: (Optional) Name of the image to build
+    required: false
 
 runs:
   using: composite
@@ -43,8 +46,10 @@ runs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        github-token: ${{ inputs.token }}
-        images: ghcr.io/${{ steps.string.outputs.lowercase }}
+        github-token:
+          ${{ inputs.token }}
+          # use image-name overwrite before using steps.string.outputs.lowercase
+        images: ghcr.io/${{ inputs.image-name-overwrite || steps.string.outputs.lowercase }}
         tags: |
           # set latest tag for default branch
           type=raw,value=latest,enable={{is_default_branch}}
@@ -59,11 +64,11 @@ runs:
 
     - name: Build and push
       id: docker_build
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
-        context: .  # Use current directory as context
+        context: . # Use current directory as context
         push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         build-args: ${{ inputs.build-args }}
-        dockerfile: ${{ inputs.dockerfile }}  # Use provided dockerfile path
+        file: ${{ inputs.dockerfile }} # Use provided dockerfile path
