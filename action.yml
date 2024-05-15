@@ -83,3 +83,5 @@ runs:
         build-args: ${{ inputs.build-args }}
         file: ${{ inputs.dockerfile }} # Use provided dockerfile path
         platforms: ${{ inputs.platforms }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
