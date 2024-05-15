@@ -72,3 +72,4 @@ runs:
         labels: ${{ steps.meta.outputs.labels }}
         build-args: ${{ inputs.build-args }}
         file: ${{ inputs.dockerfile }} # Use provided dockerfile path
+        platforms: linux/amd64,linux/arm64
