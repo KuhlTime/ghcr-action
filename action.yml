@@ -21,7 +21,6 @@ inputs:
   platforms:
     description: (Optional) The platforms you want to compile the docker images for. Defaults to linux/amd64 and linux/arm64
     required: false
-    default: linux/amd64
 
 runs:
   using: composite
