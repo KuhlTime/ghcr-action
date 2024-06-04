@@ -12,6 +12,9 @@ inputs:
   build-args:
     description: (Optional) List of build-time variables
     required: false
+  secrets:
+    description: (Optional) List of secrets
+    required: false
   dockerfile: # New input for dockerfile path
     description: Path to the Dockerfile (defaults to Dockerfile)
     default: Dockerfile # Set default value if not provided
@@ -80,6 +83,7 @@ runs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
         build-args: ${{ inputs.build-args }}
+        secrets: ${{ inputs.secrets }}
         file: ${{ inputs.dockerfile }} # Use provided dockerfile path
         platforms: ${{ inputs.platforms }}
         cache-from: type=gha
